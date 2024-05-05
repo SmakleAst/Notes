@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Notes.Persistance\Notes.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
