@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Notes.Application.Interfaces;
 using Notes.Domain;
 using Notes.Persistance.EntityTypeConfigurations;
 
 namespace Notes.Persistance
 {
-    public class NotesDbContext : DbContext
+    public class NotesDbContext : DbContext, INotesDbContext
     {
         public DbSet<Note> Notes { get; set; }
 

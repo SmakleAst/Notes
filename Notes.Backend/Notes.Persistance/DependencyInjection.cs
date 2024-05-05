@@ -10,19 +10,14 @@ namespace Notes.Persistance
         public static IServiceCollection AddPersistence(this IServiceCollection services,
             IConfiguration configuration)
         {
-            var connectionString = configuration["MSSQL"];
+            var connectionString = configuration.GetConnectionString("MSSQL");
             services.AddDbContext<NotesDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
-            services.AddScoped(provider =>
-            {
-                var dbContext = provider.GetService<NotesDbContext>();
-                return dbContext == null ? throw new Exception("NotesDbContext not found in service provider.") : (INotesDbContext)dbContext;
-            });
-
+            services.AddScoped<INotesDbContext>(provider => provider.GetService<NotesDbContext>());
 
             return services;
         }

@@ -3,6 +3,7 @@ using Notes.Application.Interfaces;
 using Notes.Persistance;
 using System.Reflection;
 using Notes.Application;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
 {
     var serviceProvider = scope.ServiceProvider;
     try
@@ -42,7 +43,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception exception)
     {
-
+        throw new Exception("“ут");
     }
 }
 
