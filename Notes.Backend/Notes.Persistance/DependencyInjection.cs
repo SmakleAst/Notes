@@ -16,6 +16,7 @@ namespace Notes.Persistance
                 options.UseSqlServer(connectionString);
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
+
             services.AddScoped(provider =>
             {
                 var dbContext = provider.GetService<NotesDbContext>();
