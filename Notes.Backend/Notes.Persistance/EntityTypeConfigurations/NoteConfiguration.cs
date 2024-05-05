@@ -4,7 +4,7 @@ using Notes.Domain;
 
 namespace Notes.Persistance.EntityTypeConfigurations
 {
-    public class NoreConfiguration : IEntityTypeConfiguration<Note>
+    public class NoteConfiguration : IEntityTypeConfiguration<Note>
     {
         public void Configure(EntityTypeBuilder<Note> builder)
         {
