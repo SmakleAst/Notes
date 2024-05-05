@@ -2,7 +2,7 @@
 using Notes.Application.Interfaces;
 using Notes.Domain;
 
-namespace Notes.Application.Notes.Commands
+namespace Notes.Application.Notes.Commands.CreateNote
 {
     public class CreateNoteCommandHandler : IRequestHandler<CreateNoteCommand, Guid>
     {
