@@ -2,19 +2,14 @@ using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Notes.Identity;
 using Notes.Identity.Data;
 using Notes.Identity.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddIdentityServer()
-    .AddAspNetIdentity<AppUser>()
-    .AddInMemoryApiResources(Configuration.ApiResources)
-    .AddInMemoryIdentityResources(Configuration.IdentityResources)
-    .AddInMemoryApiScopes(Configuration.ApiScopes)
-    .AddInMemoryClients(Configuration.Clients)
-    .AddDeveloperSigningCredential();
+builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("MSSQL");
 builder.Services.AddDbContext<AuthDbContext>(options =>
@@ -32,6 +27,15 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
 })
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
+    //.AddClaimsPrincipalFactory<UserClaimsPrincipalFactory<AppUser>>();
+
+builder.Services.AddIdentityServer()
+    .AddAspNetIdentity<AppUser>()
+    .AddInMemoryApiResources(Configuration.ApiResources)
+    .AddInMemoryIdentityResources(Configuration.IdentityResources)
+    .AddInMemoryApiScopes(Configuration.ApiScopes)
+    .AddInMemoryClients(Configuration.Clients)
+    .AddDeveloperSigningCredential();
 
 builder.Services.ConfigureApplicationCookie(config =>
 {
@@ -57,7 +61,17 @@ using (var scope = builder.Services.BuildServiceProvider().CreateScope())
     }
 }
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.ContentRootPath, "Styles")),
+    RequestPath = "/styles"
+});
+
+app.UseRouting();
+
 app.UseIdentityServer();
-app.MapGet("/", () => "Hello World!");
+
+app.MapDefaultControllerRoute();
 
 app.Run();
