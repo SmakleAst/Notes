@@ -34,19 +34,19 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-using (var scope = builder.Services.BuildServiceProvider().CreateScope())
-{
-    var serviceProvider = scope.ServiceProvider;
-    try
-    {
-        var context = serviceProvider.GetRequiredService<NotesDbContext>();
-        DbInitializer.Initialize(context);
-    }
-    catch (Exception exception)
-    {
-        throw new Exception("“ут");
-    }
-}
+//using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+//{
+//    var serviceProvider = scope.ServiceProvider;
+//    try
+//    {
+//        var context = serviceProvider.GetRequiredService<NotesDbContext>();
+//        DbInitializer.Initialize(context);
+//    }
+//    catch (Exception exception)
+//    {
+//        throw new Exception("“ут");
+//    }
+//}
 
 if (app.Environment.IsDevelopment())
 {
